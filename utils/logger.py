@@ -1,12 +1,4 @@
 # encoding: utf-8
-'''
-logger.py
-
-Created by Ale Sanchez on 2018-07-23
-
-Copyright (c) 2018. All rights reserved.
-'''
-
 import logging
 
 

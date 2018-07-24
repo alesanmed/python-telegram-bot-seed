@@ -1,12 +1,4 @@
 #coding: utf-8
-'''
-main.py
-
-Created by Ale Sanchez on 2018-07-23
-
-Copyright (c) 2018. All rights reserved.
-'''
-
 from telegram.ext import Updater, CommandHandler
 
 import utils.logger as logger
