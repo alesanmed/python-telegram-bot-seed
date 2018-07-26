@@ -18,6 +18,6 @@ if __name__ == "__main__":
         dispatcher.add_handler(command_handler)
     if(bot_config.WEBHOOK):
         updater.start_webhook(listen=bot_config.IP, port=bot_config.PORT, url_path=bot_config.URL_PATH)
-        updater.bot.set_webhook(webhook_url=bot_config.WEBHOOK_ULR, certificate=open(bot_config.CERT, 'rb'))
+        updater.bot.set_webhook(url=bot_config.WEBHOOK_URL)
     else:
         updater.start_polling()
