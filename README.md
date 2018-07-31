@@ -2,6 +2,7 @@
 
 - [Telegram.com bot in Python - Seed Project](#telegramcom-bot-in-python---seed-project)
     - [Introduction](#introduction)
+    - [Project structure](#project-structure)
     - [Let's begin](#lets-begin)
     - [Create a Telegram bot](#create-a-telegram-bot)
     - [Install dependencies](#install-dependencies)
@@ -19,6 +20,42 @@ This project has been developed using Python 3.7 and assumes that you use [pipen
 The project uses as the underlying technology [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot).
 
 The project also allows you to deploy the bot as a webhook or as a normal polling bot.
+
+## Project structure
+```bash
+.
+├── assets
+├── bot
+│   ├── start.py
+│   └── test.py
+├── configurations
+│   └── bot_config.py
+├── connectors
+│   └── __init__.py
+├── logs
+│   └── seed_bot.log
+├── utils
+│   └── logger.py
+├── commands.py
+├── LICENSE
+├── main.py
+├── Pipfile
+├── Pipfile.lock
+└── README.md
+```
+
+Let's see how is this project structured:
+- assets: Here you will place all your assets files such as icons, images, audio and video files, etc.
+- bot: Here you will place all your bot  [command](#begin-implementing-your-commands) files.
+- configurations: As it name says, this folder will contains all of your bot configuration files.
+- connectors: This folder is intented to hold any connector your bot will need (such as databases, APIs, ect.)
+- logs: Pretty self-explanatory, just the logs folder.
+- utils: Here you will place any of your bot utils files. For example, files containing sets of helper functions.
+- commands.py: This file is used for naming your commands.
+- LICENSE: Just the license file
+- main.py: The project entry point.
+- Pipfile and Pipfile.lock: Dependencies files used by pipenv
+- README.md: This file
 
 ## Let's begin
 
