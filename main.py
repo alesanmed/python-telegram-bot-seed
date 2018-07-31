@@ -41,13 +41,12 @@ if __name__ == "__main__":
 
     updater = Updater(token=bot_config.TOKEN)
 
-    signal.signal(signal.SIGINT, graceful_exit)
-
     dispatcher = updater.dispatcher
 
     load_commands(dispatcher)
     
     if(bot_config.WEBHOOK):
+        signal.signal(signal.SIGINT, graceful_exit)
         updater.start_webhook(listen=bot_config.IP, port=bot_config.PORT, url_path=bot_config.URL_PATH)
         updater.bot.set_webhook(url=bot_config.WEBHOOK_URL)
     else:
