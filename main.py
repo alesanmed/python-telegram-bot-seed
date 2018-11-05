@@ -3,13 +3,12 @@ import signal
 import sys
 import os
 
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater
 from importlib import import_module
 import inflection
 
 import utils.logger as logger
 import configurations.bot_config as bot_config
-from commands import commands
 
 updater = None
 
@@ -18,16 +17,11 @@ def load_commands(dispatcher):
     files = os.listdir(base_path)
 
     for file_name in files:
-        command_name, _ = os.path.splitext(file_name)
+        command, _ = os.path.splitext(file_name)
 
-        module = import_module(f'.{command_name}', 'bot')
+        module = import_module('.%s' % (command,), 'bot')
 
-        if command_name in commands:
-            command_name = commands[command_name]['command']
-
-        command_handler = CommandHandler(inflection.underscore(command_name), module.main)
-
-        dispatcher.add_handler(command_handler)
+        module.main(dispatcher)
         
 
 def graceful_exit(signum, frame):
@@ -37,7 +31,7 @@ def graceful_exit(signum, frame):
     sys.exit(1)
 
 if __name__ == "__main__":
-    logger.init_logger(f'logs/{bot_config.NAME}.log')
+    logger.init_logger('logs/%s.log' % (bot_config.NAME,))
 
     updater = Updater(token=bot_config.TOKEN)
 
