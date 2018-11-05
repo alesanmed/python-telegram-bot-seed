@@ -5,4 +5,4 @@ WEBHOOK = False
 IP = '0.0.0.0'
 PORT = 443
 URL_PATH = TOKEN # This is recommended for avoiding random people making fake updates to your bot
-WEBHOOK_URL = f'https://example.com/{TOKEN}'
+WEBHOOK_URL = 'https://example.com/%s' % (URL_PATH,)
