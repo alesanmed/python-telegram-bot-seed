@@ -17,6 +17,6 @@ def init_logger(logfile: str):
     root_logger.addHandler(console_handler)
 
 
-def get_logger():
+def get_logger(name: str = None):
     """Provide the root logger or initialize new."""
-    return logging.getLogger()
+    return logging.getLogger(name)
