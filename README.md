@@ -30,7 +30,7 @@ The project also allows you to deploy the bot as a webhook or as a polling bot.
 │   ├── start.py
 │   └── test.py
 ├── configurations
-│   └── bot_config.py
+│   └── config.py
 ├── connectors
 │   └── __init__.py
 ├── logs
@@ -108,11 +108,11 @@ Now that you are quite an expert at python-telegram bot, let's see how to implem
 
 You just have to create a file that will hold all your command functionality. Let's take a closer look at this process.
 
-Imagine you want to implement a `start` command. First, create your command file at the `bot/` directory. It is not required, but we recommend you to name the file as your command. As the command would be `start` is a good idea to name the file `start` too, i.e. `bot/start.py`. This file will hold all of your command code. The only requirement is that your command file has to implement a **at least** a `main` function. So the second thing you have to do is... yes, implement your command logic.
+Imagine you want to implement a `start` command. First, create your command file at the `bot/` directory. It is not required, but we recommend you to name the file as your command. As the command would be `start` is a good idea to name the file `start` too, i.e. `bot/start.py`. This file will hold all of your command code. The only requirement is that your command file has to implement a **at least** an `init` function. So the second thing you have to do is... yes, implement your command logic.
 
 All main functions from command files receive the same argument, the *dipatcher*. This way, you can implement any type of command. I'll give you an example for the *start* command:
 ```python
-def main(dispatcher): # A main function is mandatory
+def init(dispatcher): # A main function is mandatory
     start_handler = CommandHandler('start', start)
     dispatcher.add_handler(start_handler)
 
