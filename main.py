@@ -1,47 +1,47 @@
-#coding: utf-8
+# coding: utf-8
 import signal
 import sys
 import os
 
-from telegram.ext import Updater
+from telegram.ext import Updater, Dispatcher
 from importlib import import_module
 import inflection
 
 import utils.logger as logger
-import configurations.bot_config as bot_config
+import configurations.settings as settings
 
-updater = None
 
-def load_commands(dispatcher):
+def load_handlers(dispatcher: Dispatcher):
+    """Load handlers from files in a 'bot' directory."""
     base_path = os.path.join(os.path.dirname(__file__), 'bot')
     files = os.listdir(base_path)
 
     for file_name in files:
-        command, _ = os.path.splitext(file_name)
+        handler_module, _ = os.path.splitext(file_name)
 
-        module = import_module('.%s' % (command,), 'bot')
+        module = import_module(f'.{handler_module}', 'bot')
+        module.init(dispatcher)
 
-        module.main(dispatcher)
-        
 
-def graceful_exit(signum, frame):
-    if(updater is not None):
+def graceful_exit(*args, **kwargs):
+    """Provide a graceful exit from a webhook server."""
+    if updater is not None:
         updater.bot.delete_webhook()
-    
+
     sys.exit(1)
 
+
 if __name__ == "__main__":
-    logger.init_logger('logs/%s.log' % (bot_config.NAME,))
+    global updater
+    logger.init_logger(f'logs/{settings.NAME}.log')
 
-    updater = Updater(token=bot_config.TOKEN)
+    updater = Updater(token=settings.TOKEN, use_context=True)
 
-    dispatcher = updater.dispatcher
+    load_handlers(updater.dispatcher)
 
-    load_commands(dispatcher)
-    
-    if(bot_config.WEBHOOK):
+    if settings.WEBHOOK:
         signal.signal(signal.SIGINT, graceful_exit)
-        updater.start_webhook(listen=bot_config.IP, port=bot_config.PORT, url_path=bot_config.URL_PATH)
-        updater.bot.set_webhook(url=bot_config.WEBHOOK_URL)
+        updater.start_webhook(**settings.WEBHOOK_OPTIONS)
+        updater.bot.set_webhook(url=settings.WEBHOOK_URL)
     else:
         updater.start_polling()
