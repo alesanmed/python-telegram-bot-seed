@@ -12,17 +12,17 @@ import utils.logger as logger
 
 def load_handlers(dispatcher: Dispatcher):
     """Load handlers from files in a 'bot' directory."""
-    base_path = os.path.join(os.path.dirname(__file__), 'bot')
+    base_path = os.path.join(os.path.dirname(__file__), "bot")
     files = os.listdir(base_path)
 
     for file_name in files:
         handler_module, _ = os.path.splitext(file_name)
 
-        module = import_module(f'.{handler_module}', 'bot')
+        module = import_module(f".{handler_module}", "bot")
         module.init(dispatcher)
 
 
-def graceful_exit(*args, **kwargs):
+def graceful_exit(*_, **__):
     """Provide a graceful exit from a webhook server."""
     if updater is not None:
         updater.bot.delete_webhook()
@@ -31,8 +31,7 @@ def graceful_exit(*args, **kwargs):
 
 
 if __name__ == "__main__":
-    global updater
-    logger.init_logger(f'logs/{settings.NAME}.log')
+    logger.init_logger(f"logs/{settings.NAME}.log")
 
     updater = Updater(token=settings.TOKEN)
 
