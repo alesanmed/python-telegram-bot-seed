@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "python-telegram-bot-seed"
+version = "0.1.0"
+description = "Skeleton project for implementing bots in Python using the module python-telegram-bot"
+authors = ["Ale Sanchez Medina <alesanchezmedina@gmail.com>"]
+license = "The Unlicense"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+python-telegram-bot = "^13.11"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.12.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

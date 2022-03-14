@@ -7,5 +7,5 @@ WEBHOOK_OPTIONS = {
     'port': 443,
     'url_path': TOKEN,  # This is recommended for avoiding random people
                         # making fake updates to your bot
+    'webhook_url': f'https://example.com/{TOKEN}'
 }
-WEBHOOK_URL = f'https://example.com/{WEBHOOK_OPTIONS["url_path"]}'
