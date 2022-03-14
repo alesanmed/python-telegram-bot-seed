@@ -1,14 +1,13 @@
 # coding: utf-8
+import os
 import signal
 import sys
-import os
-
-from telegram.ext import Updater, Dispatcher
 from importlib import import_module
-import inflection
 
-import utils.logger as logger
+from telegram.ext import Dispatcher, Updater
+
 import configurations.settings as settings
+import utils.logger as logger
 
 
 def load_handlers(dispatcher: Dispatcher):
@@ -28,20 +27,19 @@ def graceful_exit(*args, **kwargs):
     if updater is not None:
         updater.bot.delete_webhook()
 
-    sys.exit(1)
+    sys.exit(0)
 
 
 if __name__ == "__main__":
     global updater
     logger.init_logger(f'logs/{settings.NAME}.log')
 
-    updater = Updater(token=settings.TOKEN, use_context=True)
+    updater = Updater(token=settings.TOKEN)
 
     load_handlers(updater.dispatcher)
 
     if settings.WEBHOOK:
         signal.signal(signal.SIGINT, graceful_exit)
         updater.start_webhook(**settings.WEBHOOK_OPTIONS)
-        updater.bot.set_webhook(url=settings.WEBHOOK_URL)
     else:
         updater.start_polling()
