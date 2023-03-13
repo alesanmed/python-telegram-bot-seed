@@ -14,12 +14,13 @@ def load_handlers(dispatcher: Dispatcher):
     """Load handlers from files in a 'bot' directory."""
     base_path = os.path.join(os.path.dirname(__file__), "bot")
     files = os.listdir(base_path)
-
+    ignored_files = ["__init__.py", "__pycache__"]
     for file_name in files:
-        handler_module, _ = os.path.splitext(file_name)
+        if file_name not in ignored_files:
+            handler_module, _ = os.path.splitext(file_name)
+            module = import_module(f".{handler_module}", "bot")
+            module.init(dispatcher)
 
-        module = import_module(f".{handler_module}", "bot")
-        module.init(dispatcher)
 
 
 def graceful_exit(*_, **__):
